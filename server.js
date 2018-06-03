@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webscrapper";
+var MONGODB_URI ="mongodb://<dbuser>:<dbpassword>@ds247170.mlab.com:47170/heroku_p4rnx90h" || "mongodb://localhost/webscrapper";
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);

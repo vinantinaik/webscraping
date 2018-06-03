@@ -27,8 +27,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webscrapper";
 
-mongoose.connect("mongodb://localhost/webscrapper");
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
 require("./controllers/appController.js")(app,db);
 
 // Start the server

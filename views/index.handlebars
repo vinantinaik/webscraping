@@ -1,0 +1,63 @@
+<div id="wrapper">
+
+    {{#each articles from="0" to="20"}}
+    <div class="card">
+        <div class="card-header">
+             {{this.title}}
+        </div>
+        <div class="card-body" data={{this.articleId}}>
+           
+            <p>
+                <a href="{{this.link}}" class="card-link">{{this.link}}</a>
+
+            </p>
+           
+
+            <button data-id={{this.articleId}} type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save</button>
+        </div>
+
+    </div>
+    {{/each}}
+
+</div>
+
+<div id="savedArticles">
+    {{#each savedArticles from="0" to="20"}}
+    <div class="card">
+        <div class="card-header">
+            {{this.title}}
+        </div>
+        <div class="card-body" data={{this.articleId}}>
+          
+            <p>
+                <a href="{{this.link}}" class="card-link">{{this.link}}</a>
+
+            </p>
+
+            <p> Comment:
+                <h6 class="comment-title">
+                    {{this.note.title}}
+
+                </h6>
+                <h6 class="comment-body">
+                    {{this.note.body}}
+                </h6>
+
+
+            </p>
+
+            {{!--
+            <h6 class="card-subtitle mb-2 text-muted">{{this.link}}</h6> --}}
+
+            <button data-id={{this._id}} type="button" class="btn btn-primary" data-toggle="modal" data-toggle="exampleModal">Comment</button>
+            <button data-id={{this._id}} type="button" class="btn btn-primary">Remove</button>
+        </div>
+
+    </div>
+    {{/each}}
+
+</div>
+
+
+
+

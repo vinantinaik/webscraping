@@ -1,0 +1,13 @@
+body{
+    background: url("../img/bg.jpg");
+}
+
+.card{
+    padding: 1px;
+    margin: 4px;
+}
+
+.card-header{
+    background-color:#5f9ea0;
+    color: #ffffff;
+}

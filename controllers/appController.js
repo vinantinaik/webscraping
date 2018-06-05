@@ -60,6 +60,7 @@ module.exports = function (app, db) {
       .then(function (dbArticle) {
         // If we were able to successfully update an Article, send it back to the client
         res.json(dbArticle);
+
       })
       .catch(function (err) {
         // If an error occurred, send it to the client
@@ -67,11 +68,48 @@ module.exports = function (app, db) {
       });
   });
 
+  app.delete("/comment/:id",function(req,res){
+
+    db.Note.findOneAndRemove({ _id: req.params.id })
+      .then(function () {
+        db.Article.update(
+          {"note": req.params.id},
+          {"$unset" : {"note" : req.params.id}},
+          function(err,res){
+            if (err) throw err;
+          
+          }
+        )
+        res.status(200).end();
+
+
+      })
+      .catch(function (err) {
+        res.json(err);
+      })
+
+
+  })
+
   app.delete("/remove/:id", function (req, res) {
     console.log("deleting " + req.params.id);
 
-    db.Article.findOneAndDelete({ _id: req.params.id })
+    db.Article.findOneAndRemove({ _id: req.params.id })
       .then(function () {
+
+        console.log("deleting Note :" ,req.body.noteId);
+        db.Note.findOneAndRemove({_id : req.body.noteId})
+        .then(function(){
+
+        })
+        // db.Note.update(
+        //   {"note": req.body.noteId},
+        //   {"$pull" : {"note" : req.body.noteId}},
+        //   function(err,res){
+        //     if (err) throw err;
+          
+        //   }
+        //)
         res.status(200).end();
 
 

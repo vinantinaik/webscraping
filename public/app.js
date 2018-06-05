@@ -1,5 +1,22 @@
 $(document).ready(function(){
 
+    $("#deleteComment").on("click",function(){
+
+        var thisId = $(this).attr("data-note-id");
+
+        $.ajax({
+            method: "DELETE",
+            url: "/comment/" + thisId,
+            
+          })
+          .then(function(data) {
+            
+           
+          });
+
+    })
+
+
     $("#saveComment").on("click",function(){
 
         var thisId = $("#articleTitle").text();
@@ -19,6 +36,7 @@ $(document).ready(function(){
             console.log(data);
             // Empty the notes section
             $("#comment-body").empty();
+           
           });
 
     })
@@ -50,10 +68,16 @@ $(document).ready(function(){
         {
             var article = $(this);
             var thisId = $(this).attr("data-id");
+            var noteId =  article.parent().children("h6.comment-title").attr("data");
+            let delObj = {
+                articleId:thisId,
+                noteId:noteId
+            }
        
             $.ajax({
                 method: "DELETE",
-                url: "/remove/" + thisId
+                url: "/remove/" + thisId,
+                data:delObj
               })
               .done(function(){
                
@@ -65,11 +89,13 @@ $(document).ready(function(){
         {
             var article = $(this);
             var thisId = $(this).attr("data-id");
+            var noteId =  article.parent().children("h6.comment-title").attr("data");
             var title = article.parent().children("h6.comment-title").text().trim();
             var body = article.parent().children("h6.comment-body").text().trim();
             $("#articleTitle").text(thisId);
             $("#comment-title").val(title);
             $("#comment-body").val(body);
+            $("#deleteComment").attr("data-note-id",noteId);
        
             $("#commentModal").modal('show');
         }
